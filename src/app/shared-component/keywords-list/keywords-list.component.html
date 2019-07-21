@@ -1,0 +1,29 @@
+<ion-list>
+  <ion-item-sliding id="item100" *ngFor="let keyword of keywords">
+
+    <ion-item>
+      <ion-label>
+        <h2>{{keyword.name}}</h2>
+        <small>Oceanic Next has joined your network how to see that i will come</small>
+      </ion-label>
+      <ion-icon name="information-circle" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item-options side="start">
+      <ion-item-option>
+        <ion-icon slot="icon-only" name="heart"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+
+    <ion-item-options side="end">
+      <ion-item-option>
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-item-option>
+
+      <ion-item-option>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+
+  </ion-item-sliding>
+</ion-list>

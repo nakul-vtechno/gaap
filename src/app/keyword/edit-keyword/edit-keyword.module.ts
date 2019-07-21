@@ -4,14 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { SharedComponentModule } from '../shared-component/shared-component.module';
 
-import { DashboardPage } from './dashboard.page';
+import { EditKeywordPage } from './edit-keyword.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardPage
+    component: EditKeywordPage
   }
 ];
 
@@ -20,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedComponentModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage]
+  declarations: [EditKeywordPage]
 })
-export class DashboardPageModule { }
+export class EditKeywordPageModule {}

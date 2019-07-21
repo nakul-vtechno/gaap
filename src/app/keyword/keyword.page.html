@@ -1,9 +1,22 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>keyword</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/add-keyword">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-row>
+    <ion-col>
+      <ion-toolbar class="button">
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
+    </ion-col>
+  </ion-row>
+  <app-keywords-list [keywords]="keywords"></app-keywords-list>
 </ion-content>
