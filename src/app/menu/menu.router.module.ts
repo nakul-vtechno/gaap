@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import { MenuPage } from './menu.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
-    component: TabsPage,
+    path: 'menu',
+    component: MenuPage,
     children: [
       {
         path: 'dashboard',
@@ -26,6 +26,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'how-it-work',
+        children: [
+          {
+            path: '',
+            loadChildren: '../how-it-work/how-it-work.module#HowItWorkPageModule'
+          }
+        ]
+      },
+      {
         path: 'more',
         children: [
           {
@@ -36,14 +45,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/dashboard',
+        redirectTo: '/menu/dashboard',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/dashboard',
+    redirectTo: '/menu/dashboard',
     pathMatch: 'full'
   }
 ];
@@ -54,4 +63,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule { }
+export class MenuRoutingModule { }

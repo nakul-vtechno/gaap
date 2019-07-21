@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  selector: 'app-menu',
+  templateUrl: './menu.page.html',
+  styleUrls: ['./menu.page.scss'],
 })
-export class TabsPage {
+export class MenuPage {
 
   constructor(public actionSheetController: ActionSheetController) { }
 
@@ -60,3 +60,4 @@ export class TabsPage {
   }
 
 }
+
