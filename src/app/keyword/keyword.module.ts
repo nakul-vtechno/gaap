@@ -20,7 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedComponentModule,    
+    SharedComponentModule,
     RouterModule.forChild(routes)
   ],
   declarations: [KeywordPage]
