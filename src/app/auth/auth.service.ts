@@ -24,6 +24,8 @@ export class AuthService implements OnDestroy {
   private _user = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
 
+  constructor(private http: HttpClient) { }
+
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
       map(user => {
@@ -60,42 +62,41 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  constructor(private http: HttpClient) { }
-
   autoLogin() {
-    return from(Plugins.Storage.get({ key: 'authData' })).pipe(
-      map(storedData => {
-        if (!storedData || !storedData.value) {
-          return null;
-        }
-        const parsedData = JSON.parse(storedData.value) as {
-          token: string;
-          tokenExpirationDate: string;
-          userId: string;
-          email: string;
-        };
-        const expirationTime = new Date(parsedData.tokenExpirationDate);
-        if (expirationTime <= new Date()) {
-          return null;
-        }
-        const user = new User(
-          parsedData.userId,
-          parsedData.email,
-          parsedData.token,
-          expirationTime
-        );
-        return user;
-      }),
-      tap(user => {
-        if (user) {
-          this._user.next(user);
-          this.autoLogout(user.tokenDuration);
-        }
-      }),
-      map(user => {
-        return !!user;
-      })
-    );
+    return from(Plugins.Storage.get({ key: 'authData' }))
+      .pipe(
+        map(storedData => {
+          if (!storedData || !storedData.value) {
+            return null;
+          }
+          const parsedData = JSON.parse(storedData.value) as {
+            token: string;
+            tokenExpirationDate: string;
+            userId: string;
+            email: string;
+          };
+          const expirationTime = new Date(parsedData.tokenExpirationDate);
+          if (expirationTime <= new Date()) {
+            return null;
+          }
+          const user = new User(
+            parsedData.userId,
+            parsedData.email,
+            parsedData.token,
+            expirationTime
+          );
+          return user;
+        }),
+        tap(user => {
+          if (user) {
+            this._user.next(user);
+            this.autoLogout(user.tokenDuration);
+          }
+        }),
+        map(user => {
+          return !!user;
+        })
+      );
   }
 
   signup(email: string, password: string) {
@@ -104,7 +105,11 @@ export class AuthService implements OnDestroy {
         `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
         environment.firebaseAPIKey
         }`,
-        { email: email, password: password, returnSecureToken: true }
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
       )
       .pipe(tap(this.setUserData.bind(this)));
   }
@@ -115,7 +120,11 @@ export class AuthService implements OnDestroy {
         `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
         environment.firebaseAPIKey
         }`,
-        { email: email, password: password }
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
       )
       .pipe(tap(this.setUserData.bind(this)));
   }
@@ -126,12 +135,6 @@ export class AuthService implements OnDestroy {
     }
     this._user.next(null);
     Plugins.Storage.remove({ key: 'authData' });
-  }
-
-  ngOnDestroy() {
-    if (this.activeLogoutTimer) {
-      clearTimeout(this.activeLogoutTimer);
-    }
   }
 
   private autoLogout(duration: number) {
@@ -178,5 +181,10 @@ export class AuthService implements OnDestroy {
     Plugins.Storage.set({ key: 'authData', value: data });
   }
 
+  ngOnDestroy() {
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
+  }
 
 }

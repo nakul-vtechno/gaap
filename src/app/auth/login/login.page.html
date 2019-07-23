@@ -1,6 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Login</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button color="medium" routerLink="/menu/dashboard">
+        <ion-icon title="Lo" name="home" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="primary">
+      <ion-button color="medium" routerLink="/signup">
+        <ion-icon title="Lo" name="person-add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-buttons slot="primary">
       <ion-button color="success" [disabled]='form.invalid' (click)="onSubmit()">
         <ion-icon name="checkmark" slot="icon-only"></ion-icon>

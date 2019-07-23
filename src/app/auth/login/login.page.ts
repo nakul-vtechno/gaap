@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
       this.router.navigateByUrl('/menu/dashboard');
     },
     errRes => {
+      console.log("errRes ::: ",errRes)
       const code = errRes.error.error.message;
       let message = 'Could not sign you up, please try again.';
       if (code === 'EMAIL_EXISTS') {
@@ -53,7 +54,6 @@ export class LoginPage implements OnInit {
 
   public onSubmit() {
     if (this.form.invalid) return;
-    console.log(this.form.value);
     const email = this.form.value.email;
     const password = this.form.value.password;
     this.login(email, password);

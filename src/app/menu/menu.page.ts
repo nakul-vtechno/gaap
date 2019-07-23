@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,9 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class MenuPage {
 
-  constructor(public actionSheetController: ActionSheetController) { }
+  constructor(
+    public actionSheetController: ActionSheetController,
+    private authService:AuthService) { }
 
   async more() {
     const actionSheet = await this.actionSheetController.create({
@@ -44,6 +47,14 @@ export class MenuPage {
           cssClass: 'more-action-sheet',
           handler: () => {
             console.log('Favorite clicked');
+          }
+        },
+        {
+          text: 'Logout',
+          icon: 'log-out',
+          cssClass: 'more-action-sheet',
+          handler: () => {
+            this.authService.logout();
           }
         },
         {

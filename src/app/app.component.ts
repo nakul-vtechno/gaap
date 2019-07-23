@@ -1,23 +1,22 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
 
 import { AuthService } from './auth/auth.service';
-import { Plugins } from '@capacitor/core';
+
+import { Plugins, AppState } from '@capacitor/core';
 import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   private authSub: Subscription;
   private previousAuthState = false;
-
 
   constructor(
     private platform: Platform,
@@ -25,7 +24,6 @@ export class AppComponent {
     private statusBar: StatusBar,
     private authService: AuthService,
     private router: Router
-
   ) {
     this.initializeApp();
   }
@@ -40,7 +38,7 @@ export class AppComponent {
   ngOnInit() {
     this.authSub = this.authService.userIsAuthenticated.subscribe(isAuth => {
       if (!isAuth && this.previousAuthState !== isAuth) {
-        this.router.navigateByUrl('/auth');
+        this.router.navigateByUrl('/login');
       }
       this.previousAuthState = isAuth;
     });
@@ -48,17 +46,6 @@ export class AppComponent {
       'appStateChange',
       this.checkAuthOnResume.bind(this)
     );
-  }
-
-  onLogout() {
-    this.authService.logout();
-  }
-
-  ngOnDestroy() {
-    if (this.authSub) {
-      this.authSub.unsubscribe();
-    }
-    Plugins.App.removeListener('appStateChange', this.checkAuthOnResume);
   }
 
   private checkAuthOnResume(state: AppState) {
@@ -72,5 +59,18 @@ export class AppComponent {
           }
         });
     }
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
+    Plugins.App.addListener(
+      'appStateChange',
+      this.checkAuthOnResume);
   }
 }
