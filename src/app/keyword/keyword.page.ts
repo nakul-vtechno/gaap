@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KeywordService } from './keyword.service';
 
 @Component({
   selector: 'app-keyword',
@@ -7,11 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KeywordPage implements OnInit {
 
-  public keywords:Array<{}>;
+  public keywords: Array<{}>;
 
-  constructor() { }
+  constructor(private api: KeywordService) { }
 
   ngOnInit() {
+    this.getKeyword();
     this.keywords = [
       {
         name:'Mega Man X',
@@ -47,4 +49,11 @@ export class KeywordPage implements OnInit {
       },
     ]
   }
+
+  getKeyword() {
+    this.api.getKeyword().subscribe((resData) => {
+      console.log('Get Keywords :: ', resData);
+    });
+  }
+
 }
