@@ -4,14 +4,99 @@
       <ion-back-button [defaultHref]="'/menu/keyword'"></ion-back-button>
     </ion-buttons>
     <ion-title>Add keyword</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button>
-        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-segment scrollable="true" (ionChange)="segmentChanged($event)">
+            <ion-segment-button [checked]="stepper.stepOne" value="stepOne">
+              <ion-label>step 1</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="stepTwo" [checked]="stepper.stepTwo" [disabled]="form.controls.keyword.invalid">
+              <ion-label>step 2</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="stepThree" [checked]="stepper.stepThree"
+              [disabled]="form.controls.keyword.invalid">
+              <ion-label>step 3</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- Stepper-one -->
+    <ion-grid *ngIf="stepper.stepOne">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Keyword Name</ion-label>
+            <ion-input onkeyup="this.value = this.value.toUpperCase();" required="true" formControlName='keyword'></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="form.controls.keyword.invalid" (click)="next(step.stepTwo)" shape="round" slot="end"
+            color="primary" size="small">Next
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <app-step-detail [title]="'Step One'" [description]="'Description'"></app-step-detail>
+    </ion-grid>
+
+    <!-- Stepper-two -->
+    <ion-grid *ngIf="stepper.stepTwo">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Privacy : </ion-label>
+            <ion-text slot="end">Private</ion-text>
+            <ion-toggle color="success" formControlName='privacy' slot="end"></ion-toggle>
+            <ion-text slot="end">Public</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Keyword Description</ion-label>
+            <ion-textarea formControlName='description'></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="next(step.stepOne)" shape="round" slot="end" color="primary" size="small">Previous
+          </ion-button>
+          <ion-button (click)="next(step.stepThree)" shape="round" slot="end" color="primary" size="small">Next
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <app-step-detail [title]="'Step Two'" [description]="'Description'"></app-step-detail>
+    </ion-grid>
+
+    <!-- Stepper-three -->
+    <ion-grid *ngIf="stepper.stepThree">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="fixed">Upload Document: </ion-label>
+            <ion-input type="file" formControlName='file'></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="next(step.stepTwo)" shape="round" slot="end" color="primary" size="small">Previous
+          </ion-button>
+          <ion-button [disabled]="form.invalid" (click)="save()" shape="round" slot="end" color="primary" size="small">
+            Done</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <app-step-detail [title]="'Step Three'" [description]="'Dyanic Details...'"></app-step-detail>
+    </ion-grid>
+  </form>
+  <!-- <pre>
+    {{this.form.value | json}}
+  </pre> -->
 </ion-content>
