@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-    })
+    });
   }
 
   public login(email: string, password: string) {
@@ -59,14 +59,13 @@ export class LoginPage implements OnInit {
     this.login(email, password);
   }
 
-  private showAlert(message: string) {
+  private showAlert(alertMessage: string) {
     this.alertCtrl
       .create({
-        header: 'Authentication failed',
-        message: message,
+        header: 'Opps! Something\'s wrong!',
+        message: alertMessage,
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
   }
-
 }

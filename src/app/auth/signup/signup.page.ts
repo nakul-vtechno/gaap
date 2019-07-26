@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, EmailValidator } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -16,7 +16,11 @@ export class SignupPage implements OnInit {
     private fb: FormBuilder,
     private alertCtrl: AlertController,
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    ) { }
+
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
 
   ngOnInit() {
     this.createForm();
@@ -25,14 +29,15 @@ export class SignupPage implements OnInit {
   public createForm() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    })
+      mobile: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      password: ['', [Validators.required, Validators.minLength(5)]]
+    });
   }
 
-  public signup(email,password) {
-    this.authService.signup(email,password)
+  public signup(email: any, password: any) {
+    this.authService.signup(email, password)
     .subscribe((resData) => {
-      console.log("resData",resData);
+      console.log('resData', resData);
       this.router.navigateByUrl('/');
     },
     errRes => {
@@ -46,26 +51,31 @@ export class SignupPage implements OnInit {
         message = 'This password is not correct.';
       }
       this.showAlert(message);
-    }
-    )
+    });
   }
 
   public onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
     console.log(this.form.value);
     const email = this.form.value.email;
     const password = this.form.value.password;
     this.signup(email, password);
   }
 
-  private showAlert(message: string) {
+  private showAlert(alertMessage: string) {
     this.alertCtrl
       .create({
-        header: 'Authentication failed',
-        message: message,
+        header: 'Opps! Something\'s wrong!',
+        message: alertMessage,
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
   }
 
+  public hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
 }
