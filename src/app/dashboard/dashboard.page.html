@@ -1,20 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Green App</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card class="welcome-card">
-    <img src="/assets/shapes.svg" alt="" />
-    <ion-card-header>
-      <ion-card-subtitle>Get Started</ion-card-subtitle>
-      <ion-card-title>Welcome to Ionic</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Now that your app has been created, you'll want to start building out features and components. Check out some
-        of the resources below for next steps.</p>
-    </ion-card-content>
-  </ion-card>
-  <app-keywords-list [keywords]="keywords"></app-keywords-list>
+  <ion-row>
+    <ion-col size="12" class="top-panel">
+      <h2>Green<span style="color:#696868;">App</span></h2>
+      <ion-input class="keyword-input" color="none" inputmode="text" name="keyword" minlength="3" placeholder="Enter Keyword" autocapitalize="true"></ion-input>
+      <ion-button size="large" style="width: 40%;height: 18%;" color="warning">Send</ion-button>
+      <ion-button size="large" style="width: 40%;height: 18%;" color="warning">Receive</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="dashboard-mid-panel-label">
+    <ion-col>
+      <span class="label-your-keywords">Your Keywords</span>
+      <br />
+      <app-keywords-list [keywords]="keywords"></app-keywords-list>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+        <ion-button expand="block" class="dw">Add New Keyword</ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>

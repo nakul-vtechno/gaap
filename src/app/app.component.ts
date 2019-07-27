@@ -5,6 +5,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth/auth.service';
+import { PlatformService } from '../environments/services/platform.service';
+import { DevelopmentService } from '../environments/services/development.service';
 
 import { Plugins, AppState } from '@capacitor/core';
 import { take } from 'rxjs/operators';
@@ -23,13 +25,17 @@ export class AppComponent implements OnInit, OnDestroy {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
+    private platformService: PlatformService,
+    private dev: DevelopmentService,
     private router: Router
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then((source) => {
+      this.dev.log('Platform', source);
+      this.platformService.setPlatform(source);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

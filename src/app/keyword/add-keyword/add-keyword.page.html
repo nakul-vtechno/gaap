@@ -1,11 +1,22 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/menu/keyword'"></ion-back-button>
     </ion-buttons>
     <ion-title>Add keyword</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<ion-header no-border style="padding-top:30px;">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="login"></ion-back-button>
+      </ion-buttons>
+      <ion-buttons >
+          <span style="margin-left:32%">Add Keyword</span>
+       </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
   <form [formGroup]="form">

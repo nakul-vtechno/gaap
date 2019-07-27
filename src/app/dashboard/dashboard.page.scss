@@ -1,0 +1,32 @@
+.top-panel{
+    height: 300px;
+    padding-top:25px;
+    text-align: -webkit-center;
+    background-image: url('dashboard-bg.jpg');
+    color:#00A650;
+    box-shadow: 3px 7px 20px 0px #888888;
+}
+
+.keyword-input{
+    width: 80%;
+    height: 20%;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom:16px;
+}
+
+.dashboard-mid-panel-label{
+    padding-top:30px;
+    font-size:16px;
+    text-align:-webkit-center;
+}
+
+.label-your-keywords{
+    display: block;
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
+
+.dw{
+    --background: rgba(76,185,196,1);
+}

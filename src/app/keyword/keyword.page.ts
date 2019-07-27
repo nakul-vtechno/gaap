@@ -27,26 +27,6 @@ export class KeywordPage implements OnInit {
         name:'hello',
         id:'1'
       },
-      {
-        name:'India',
-        id:'1'
-      },
-      {
-        name:'News',
-        id:'1'
-      },
-      {
-        name:'form-16',
-        id:'1'
-      },
-      {
-        name:'School',
-        id:'1'
-      },
-      {
-        name:'office',
-        id:'1'
-      },
     ]
   }
 
