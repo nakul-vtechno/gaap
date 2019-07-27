@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
   { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './auth/signup/signup.module#SignupPageModule' },
-
+  { path: 'detail-keyword/:id', loadChildren: './keyword/detail-keyword/detail-keyword.module#DetailKeywordPageModule' },
 ];
 
 @NgModule({

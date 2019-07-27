@@ -12,12 +12,22 @@ export class KeywordsListComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log('KeyWords : ' , this.keywords);
+    console.log('KeyWords : ', this.keywords);
+    this.keywords = [...this.keywords];
   }
 
-  swipeSlider(slider) {
-    // slider.closeOpened();
+  openDetail(keyword: any) {
+    this.router.navigateByUrl(`detail-keyword/${keyword.id}`);
+  }
+
+  swipeSlider(event: any, slider: any) {
     slider.open();
+    slider.getSlidingRatio().then((ratio: number) => {
+      if (ratio > 0) {
+        slider.close();
+      }
+    });
+    event.stopPropagation();
   }
 
   delete(slider, keyword: any) {
@@ -27,7 +37,6 @@ export class KeywordsListComponent implements OnInit {
 
   edit(slider, keyword: any) {
     slider.close();
-    console.log('edit :', keyword);
     this.router.navigateByUrl('/edit-keyword');
   }
 
