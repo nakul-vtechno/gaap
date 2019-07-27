@@ -41,4 +41,8 @@ export class KeywordsListComponent implements OnInit {
     console.log('receive :', keyword);
   }
 
+  hello(){
+    alert('ad');
+  }
+
 }
