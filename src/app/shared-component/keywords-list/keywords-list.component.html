@@ -3,16 +3,20 @@
     <ion-list>
       <ion-item-sliding #slider id="item100" *ngFor="let keyword of keywords">
         <ion-item lines="full" button="true" type="button" class="slider-item" (click)="openDetail(keyword)">
-          <ion-label>
-            <h2 style="font-size:26px;color:rgb(19, 197, 153);">{{keyword.name}}</h2>
+          <ion-label color="secondary" class="slider-label">
+            <!-- <h2 style="font-size:26px;color:rgb(19, 197, 153);">{{keyword.name}}</h2> -->
             <!-- <small>Oceanic Next has joined your network how to see that i will come</small> -->
+            {{keyword.name}}
           </ion-label>
-          <ion-button class="slider-buttton" (click)="swipeSlider($event, slider)" slot="end" fill="clear" size="small" shape="round" type="button" expand="block">
-            <ion-icon size="large" name="disc" color="danger" slot="end"></ion-icon>
+          <ion-button class="slider-buttton" (click)="swipeSlider($event, slider)" slot="end" fill="clear" size="small"
+            shape="round" type="button"  color="danger">
+            <!-- <ion-icon size="large" name="disc" color="danger" slot="icon-only"></ion-icon> -->
+            <ion-icon name="arrow-dropleft-circle"  slot="icon-only"></ion-icon>
           </ion-button>
+
         </ion-item>
-        <ion-item-options side="end" style="padding-top: 8px;">
-          <table>
+        <ion-item-options side="end" (ionSwipe)="ionSwipe($event)">
+          <!-- <table>
             <tr>
               <td>
                   <ion-chip (click)="hello()" outline="false" color="success">
@@ -35,7 +39,26 @@
                   </ion-chip>
               </td>
             </tr>
-          </table>
+          </table> -->
+
+            <ion-item-option (click)="send(slider,keyword)" type="button" expandable color="secondary">
+              <ion-icon  size="small" name="send"></ion-icon>
+              Send
+            </ion-item-option>
+            <ion-item-option (click)="receive(slider,keyword)" type="button"  expandable color="secondary">
+              <ion-icon size="small" name="cloud-download"></ion-icon>
+              Receive
+            </ion-item-option>
+
+            <ion-item-option (click)="edit(slider,keyword)" type="button" expandable color="secondary">
+              <ion-icon size="small" name="create"></ion-icon>
+              Edit
+            </ion-item-option>
+
+            <ion-item-option (click)="delete(slider,keyword)" type="button" color="danger" expandable>
+              <ion-icon size="small" name="trash"></ion-icon>
+              Delete
+            </ion-item-option>
         </ion-item-options>
 
       </ion-item-sliding>
