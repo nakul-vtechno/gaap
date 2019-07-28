@@ -8,29 +8,29 @@
 </ion-header> -->
 
 <ion-header no-border style="padding-top:30px;">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="login"></ion-back-button>
-      </ion-buttons>
-      <ion-buttons >
-          <span style="margin-left:32%">Add Keyword</span>
-       </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons>
+      <span style="margin-left:32%">Add Keyword</span>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <form [formGroup]="form">
-    <ion-grid>
+    <ion-grid  class="grid-segment">
       <ion-row>
         <ion-col>
-          <ion-segment scrollable="true" (ionChange)="segmentChanged($event)">
-            <ion-segment-button [checked]="stepper.stepOne" value="stepOne">
+          <ion-segment color="secondary" scrollable="true" (ionChange)="segmentChanged($event)">
+            <ion-segment-button class="grid-segment-button-step" [checked]="stepper.stepOne" value="stepOne">
               <ion-label>step 1</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="stepTwo" [checked]="stepper.stepTwo" [disabled]="form.controls.keyword.invalid">
+            <ion-segment-button class="grid-segment-button-step" value="stepTwo" [checked]="stepper.stepTwo" [disabled]="form.controls.keyword.invalid">
               <ion-label>step 2</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="stepThree" [checked]="stepper.stepThree"
+            <ion-segment-button class="grid-segment-button-step" value="stepThree" [checked]="stepper.stepThree"
               [disabled]="form.controls.keyword.invalid">
               <ion-label>step 3</ion-label>
             </ion-segment-button>
@@ -40,19 +40,26 @@
     </ion-grid>
     <!-- Stepper-one -->
     <ion-grid *ngIf="stepper.stepOne">
-      <ion-row>
+      <ion-row class="stepper-one">
         <ion-col>
           <ion-item>
             <ion-label position="floating">Keyword Name</ion-label>
-            <ion-input onkeyup="this.value = this.value.toUpperCase();" required="true" formControlName='keyword'></ion-input>
+            <ion-input class="stepper-input"  formControlName='keyword'>
+            </ion-input>
           </ion-item>
+          <ion-note class="stepper-note" *ngIf="form.get('keyword').errors?.keywordExists" color="danger">keyword not
+            available</ion-note>
+            <ion-note class="stepper-note" *ngIf="form.get('keyword').errors?.minlength" color="danger">Min Character There</ion-note>
+            <ion-note class="stepper-note" *ngIf="form.get('keyword').errors?.pattern" color="danger">Special Character are not allow</ion-note>
         </ion-col>
       </ion-row>
 
       <ion-toolbar>
         <ion-buttons slot="end">
           <ion-button [disabled]="form.controls.keyword.invalid" (click)="next(step.stepTwo)" shape="round" slot="end"
-            color="primary" size="small">Next
+            color="primary" size="small">
+            <ion-note>Next</ion-note>
+            <ion-icon name="fastforward" slot="end"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -77,9 +84,13 @@
       </ion-row>
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button (click)="next(step.stepOne)" shape="round" slot="end" color="primary" size="small">Previous
+          <ion-button (click)="next(step.stepOne)" shape="round" slot="start" color="primary" size="small">
+              <ion-note>Previous</ion-note>
+              <ion-icon name="rewind" slot="start"></ion-icon>
           </ion-button>
-          <ion-button (click)="next(step.stepThree)" shape="round" slot="end" color="primary" size="small">Next
+          <ion-button (click)="next(step.stepThree)" shape="round" slot="end" color="primary" size="small">
+              <ion-note>Next</ion-note>
+              <ion-icon name="fastforward" slot="end"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -90,15 +101,17 @@
     <ion-grid *ngIf="stepper.stepThree">
       <ion-row>
         <ion-col>
-          <ion-item>
-            <ion-label position="fixed">Upload Document: </ion-label>
-            <ion-input type="file" formControlName='file'></ion-input>
-          </ion-item>
+          <ion-toolbar class="custom-file">
+            <ion-input class="custom-file-input" type="file" formControlName='file' (change)="onFileSelect($event)"></ion-input>
+            <ion-label slot="start" class="custom-file-label">{{form.get('file').value ? form.get('file').value.name : 'Upload Document'}}</ion-label>
+          </ion-toolbar>
         </ion-col>
       </ion-row>
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button (click)="next(step.stepTwo)" shape="round" slot="end" color="primary" size="small">Previous
+          <ion-button (click)="next(step.stepTwo)" shape="round" slot="end" color="primary" size="small">
+              <ion-note>Previous</ion-note>
+              <ion-icon name="rewind" slot="start"></ion-icon>
           </ion-button>
           <ion-button [disabled]="form.invalid" (click)="save()" shape="round" slot="end" color="primary" size="small">
             Done</ion-button>

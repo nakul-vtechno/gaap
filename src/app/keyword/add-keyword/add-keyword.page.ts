@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorsService } from 'src/app/validators/validators.service';
 
 import { KeywordService } from '../keyword.service';
 
@@ -28,6 +29,7 @@ export class AddKeywordPage implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private validator: ValidatorsService,
     private api: KeywordService) { }
 
   ngOnInit() {
@@ -48,9 +50,18 @@ export class AddKeywordPage implements OnInit, OnChanges {
 
   createForm() {
     this.form = this.fb.group(({
-      keyword: [null, [Validators.required, Validators.minLength(3)]],
-      description : [null, []],
-      privacy : [null],
+      keyword: [
+        // initial value
+        null,
+        // sync built-in validators
+        Validators.compose(
+          [Validators.required, Validators.minLength(3), Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$')],
+        ),
+        // custom async validator
+        this.validator.keywordValidator()
+      ],
+      description: [null, []],
+      privacy: [null],
       file: [null, [Validators.required]]
     }));
   }
@@ -76,8 +87,17 @@ export class AddKeywordPage implements OnInit, OnChanges {
     }
   }
 
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('file').setValue(file);
+    }
+  }
+
   save() {
-    console.log(this.form.value);
+    const formData = new FormData();
+    formData.append('file', this.form.get('file').value);
+
     const options = {
       command: 'addkeyword',
       addkey: this.form.value.keyword,
@@ -86,12 +106,13 @@ export class AddKeywordPage implements OnInit, OnChanges {
       usermail: 'nakul27@gmail.com',
       usermobile: '9999999999'
     };
-    this.api.addKeyword(options)
-    .subscribe((resData) => {
-      console.log('RespData : ', resData);
-      this.router.navigateByUrl('menu/keyword');
 
-    });
+    console.log(this.form.value);
+    this.api.addKeyword(options)
+      .subscribe((resData) => {
+        console.log('RespData : ', resData);
+        this.router.navigateByUrl('menu/keyword');
+      });
   }
 
   reset() {
