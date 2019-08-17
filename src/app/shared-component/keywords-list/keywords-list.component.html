@@ -2,7 +2,7 @@
   <ion-col>
     <ion-list>
       <ion-item-sliding #slider id="item100" *ngFor="let keyword of keywords">
-        <ion-item lines="full" button="true" type="button" class="slider-item" (click)="openDetail(keyword)">
+        <ion-item mode="md" lines="full" button="true" type="button" class="slider-item" (click)="openDetail(keyword)">
           <ion-label color="secondary" class="slider-label">
             <!-- <h2 style="font-size:26px;color:rgb(19, 197, 153);">{{keyword.name}}</h2> -->
             <!-- <small>Oceanic Next has joined your network how to see that i will come</small> -->
@@ -41,22 +41,22 @@
             </tr>
           </table> -->
 
-            <ion-item-option (click)="send(slider,keyword)" type="button" expandable color="secondary">
-              <ion-icon  size="small" name="send"></ion-icon>
+            <ion-item-option (click)="send(slider,keyword)" type="button" expandable color="primary">
+              <!-- <ion-icon  size="small" name="send"></ion-icon> -->
               Send
             </ion-item-option>
             <ion-item-option (click)="receive(slider,keyword)" type="button"  expandable color="secondary">
-              <ion-icon size="small" name="cloud-download"></ion-icon>
+              <!-- <ion-icon size="small" name="cloud-download"></ion-icon> -->
               Receive
             </ion-item-option>
 
-            <ion-item-option (click)="edit(slider,keyword)" type="button" expandable color="secondary">
-              <ion-icon size="small" name="create"></ion-icon>
+            <ion-item-option (click)="edit(slider,keyword)" type="button" expandable color="warning">
+              <!-- <ion-icon size="small" name="create"></ion-icon> -->
               Edit
             </ion-item-option>
 
             <ion-item-option (click)="delete(slider,keyword)" type="button" color="danger" expandable>
-              <ion-icon size="small" name="trash"></ion-icon>
+              <!-- <ion-icon size="small" name="trash"></ion-icon> -->
               Delete
             </ion-item-option>
         </ion-item-options>

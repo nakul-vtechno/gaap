@@ -4,7 +4,7 @@ import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { map, switchMap  } from 'rxjs/operators';
 
-// const URL = 'https://jsonplaceholder.typicode.com';
+const URL = 'https://jsonplaceholder.typicode.com';
 // Example : https://stackblitz.com/edit/angular-reactive-forms-async-validator
 const DemoKeyword = ['ABC', 'TEST', 'DLF', 'HELLO'];
 
@@ -20,12 +20,12 @@ export class ValidatorsService {
       .pipe(
         switchMap(() => {
           // Check if Keyword is available
-          // return this.http.get<any>(`${URL}/users?username=${text}`);
-          if (DemoKeyword.indexOf(text.toUpperCase()) === -1) {
-            return [];
-          } else {
-            return [text];
-          }
+          return this.http.get<any>(`${URL}/users?username=${text}`);
+          // if (DemoKeyword.indexOf(text.toUpperCase()) === -1) {
+          //   return [];
+          // } else {
+          //   return [text];
+          // }
         })
       );
   }
