@@ -1,0 +1,31 @@
+{
+  "name": "grren",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run prod",
+    "dev": "NODE_ENV=development npm run watch ./src/bin/www",
+    "prod": "npm run build && NODE_ENV=production node ./dist/bin/www",
+    "build": "npm run clean && babel ./src --out-dir dist",
+    "clean": "rimraf dist",
+    "watch": "nodemon --config ./nodemon.json --"
+  },
+  "dependencies": {
+    "bigint-hash": "^0.2.2",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "eslint": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.1"
+  }
+}
