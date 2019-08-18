@@ -1,0 +1,8 @@
+<form [formGroup] = "thisForm" (ngSubmit)="onSubmit()">
+  <ion-input type="email" placeholder="Enter Email" formControlName="email"></ion-input>
+  <ion-input type="number" placeholder="Enter Mobile" formControlName="mobile" minlength=10 maxlength=10></ion-input>
+  <ion-button size="large" color="warning" class="dashboard-button">Confirm</ion-button>
+  <div *ngIf="thisForm.invalid" class="invalid-feedback">
+    <div>Email or Mibile number is invalid</div>
+  </div>  
+</form>

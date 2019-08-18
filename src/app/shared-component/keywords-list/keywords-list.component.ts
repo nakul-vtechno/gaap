@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Plugins } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { KeywordsService } from '../../services/keywords.service';
 
 @Component({
   selector: 'app-keywords-list',
@@ -7,13 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./keywords-list.component.scss'],
 })
 export class KeywordsListComponent implements OnInit {
-  @Input() keywords: Array<{}>;
+  // @Input() keywords: Array<{}>;
+  public keywordsList = [];
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private keywords: KeywordsService) { }
 
   ngOnInit() {
-    console.log('KeyWords : ', this.keywords);
-    this.keywords = [...this.keywords];
+    Plugins.Storage.get('authData').then((data) => {
+      console.log('KeyWords : ', data);
+    });
+    // this.keywords = Plugins.Storage.get({ key: 'authData' });
+    // this.keywords = [...this.keywords];
+    this.keywordsList = this.keywords.getKeywords();
+    console.log('this.keywordsList : ', this.keywordsList);
   }
 
   openDetail(keyword: any) {

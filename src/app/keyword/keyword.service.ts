@@ -11,7 +11,7 @@ export class KeywordService {
   getKeyword() {
     const options = {
       command: 'getdocuments',
-      uid: 'nakul27@gmail.com'
+      user: 'nakul27@gmail.com'
     };
     return this.http.post('http://thinkterns.com/gaap/action.php', options);
   }

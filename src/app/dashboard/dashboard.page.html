@@ -1,17 +1,44 @@
-<ion-content>
-  <ion-row>
-    <ion-col size="12" class="top-panel">
-      <h2>Green<span style="color:#696868;">App</span></h2>
-      <ion-input class="keyword-input" color="none" inputmode="text" name="keyword" minlength="3" placeholder="Enter Keyword" autocapitalize="true"></ion-input>
-      <ion-button size="large" style="width: 40%;height: 18%;" color="warning">Send</ion-button>
-      <ion-button size="large" style="width: 40%;height: 18%;" color="warning">Receive</ion-button>
-    </ion-col>
-  </ion-row>
+<ion-content class="with-bg">
+  <ion-grid>
+    <ion-row style="text-align: center;">
+      <ion-col style="padding-top:10px;">
+          <p>GreenApp</p>
+      </ion-col>
+    </ion-row>
+    <div style="background: url('/assets/dashboard-bg.jpg') !important;border-radius: 5px;background-size: 100%;">
+    <div *ngIf="currentStep === 1; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+      <ion-row class="keyword-box">
+        <ion-col size="12" style="text-align: -webkit-center;">
+            <ion-input class="keyword-input" color="none" inputmode="text" name="keyword" minlength="3" placeholder="Enter Keyword" autocapitalize="true" [(ngModel)]="keywordValue"></ion-input>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="buttons-container">
+            <ion-button size="large" color="warning" (click)="onClickSendButton()" class="dashboard-button">Send</ion-button>
+            <ion-button size="large" color="warning" class="dashboard-button">Receive</ion-button>
+        </ion-col>
+      </ion-row>
+  </ng-template>
+  <ng-template #elseBlock>
+      <ion-row class="keyword-box">
+        <ion-col size="12" style="text-align: -webkit-center;">
+          <app-dashboard-form></app-dashboard-form>
+        </ion-col>
+      </ion-row>
+  </ng-template>
+</div>
   <ion-row class="dashboard-mid-panel-label">
     <ion-col>
       <span class="label-your-keywords">Your Keywords</span>
       <br />
-      <app-keywords-list [keywords]="keywords"></app-keywords-list>
+      <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+      <app-keyword-list-cards></app-keyword-list-cards>
+      <!-- <ion-card>        
+          <ion-card-content>
+            <ion-card-title>HELLO</ion-card-title>
+          </ion-card-content>
+        </ion-card>  -->
     </ion-col>
   </ion-row>
   <ion-row>
@@ -19,4 +46,5 @@
         <ion-button expand="block" class="dw">Add New Keyword</ion-button>
     </ion-col>
   </ion-row>
+</ion-grid>
 </ion-content>

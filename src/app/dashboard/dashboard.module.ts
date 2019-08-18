@@ -23,6 +23,6 @@ const routes: Routes = [
     SharedComponentModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage],
 })
 export class DashboardPageModule { }
