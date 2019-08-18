@@ -3,17 +3,20 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser'
 import logger from 'morgan';
+import cors from 'cors';
 
 import indexRouter from './routes/index';
 import userRouter from './routes/user';
 import keywordRouter from './routes/keyword';
 
 const app = express();
+// var cors = require('cors');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, '../public')));
 
