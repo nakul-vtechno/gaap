@@ -17,11 +17,6 @@ export class KeywordsListComponent implements OnInit {
     private keywords: KeywordsService) { }
 
   ngOnInit() {
-    Plugins.Storage.get('authData').then((data) => {
-      console.log('KeyWords : ', data);
-    });
-    // this.keywords = Plugins.Storage.get({ key: 'authData' });
-    // this.keywords = [...this.keywords];
     this.keywordsList = this.keywords.getKeywords();
     console.log('this.keywordsList : ', this.keywordsList);
   }
