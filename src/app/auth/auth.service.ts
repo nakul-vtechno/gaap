@@ -7,6 +7,9 @@ import { Plugins } from '@capacitor/core';
 import { environment } from '../../environments/environment';
 import { User } from './model/user.model';
 
+import { UserService } from '../services/user.service';
+import { KeywordsService } from '../services/keywords.service';
+
 export interface AuthResponseData {
   kind: string;
   idToken: string;
@@ -21,12 +24,17 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {
+
   private _user = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    public Keywords: KeywordsService,
+    public UserDetails: UserService) { }
 
   get userIsAuthenticated() {
+    console.log('UserService.userData autoLogin');
     return this._user.asObservable().pipe(
       map(user => {
         if (user) {
@@ -50,6 +58,18 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  get userEmail() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.email;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
   get token() {
     return this._user.asObservable().pipe(
       map(user => {
@@ -63,6 +83,7 @@ export class AuthService implements OnDestroy {
   }
 
   autoLogin() {
+    this.Keywords.getUserKeywords(this.UserDetails.getUserData().email);
     return from(Plugins.Storage.get({ key: 'authData' }))
       .pipe(
         map(storedData => {
@@ -164,6 +185,9 @@ export class AuthService implements OnDestroy {
       expirationTime.toISOString(),
       userData.email
     );
+    this.UserDetails.setUserDatas(userData);
+    this.Keywords.getUserKeywords(this.UserDetails.getUserData().email);
+    console.log('UserService.userData => ', this.UserDetails.getUserData());
   }
 
   private storeAuthData(

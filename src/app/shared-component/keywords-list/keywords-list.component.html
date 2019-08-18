@@ -1,12 +1,12 @@
 <ion-row>
   <ion-col>
     <ion-list>
-      <ion-item-sliding #slider id="item100" *ngFor="let keyword of keywords">
+      <ion-item-sliding #slider id="item100" *ngFor="let keyword of keywordsList">
         <ion-item mode="md" lines="full" button="true" type="button" class="slider-item" (click)="openDetail(keyword)">
           <ion-label color="secondary" class="slider-label">
             <!-- <h2 style="font-size:26px;color:rgb(19, 197, 153);">{{keyword.name}}</h2> -->
             <!-- <small>Oceanic Next has joined your network how to see that i will come</small> -->
-            {{keyword.name}}
+            {{keyword.doc_code}}
           </ion-label>
           <ion-button class="slider-buttton" (click)="swipeSlider($event, slider)" slot="end" fill="clear" size="small"
             shape="round" type="button"  color="danger">

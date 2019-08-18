@@ -32,7 +32,8 @@
     <ion-col>
       <span class="label-your-keywords">Your Keywords</span>
       <br />
-      <app-keyword-list-cards [keywords]="keywords"></app-keyword-list-cards>
+      <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+      <app-keyword-list-cards></app-keyword-list-cards>
       <!-- <ion-card>        
           <ion-card-content>
             <ion-card-title>HELLO</ion-card-title>

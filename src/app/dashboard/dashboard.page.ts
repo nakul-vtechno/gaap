@@ -8,9 +8,9 @@ import { ToastController } from '@ionic/angular';
 })
 export class DashboardPage implements OnInit {
 
-  public keywords: Array<{}>;
   public currentStep = 1;
   public keywordValue = '';
+  public loading = true;
   slideOpts = {
     initialSlide: 1,
     speed: 400
@@ -19,20 +19,9 @@ export class DashboardPage implements OnInit {
   constructor(public toastController: ToastController) { }
 
   ngOnInit() {
-    this.keywords = [
-      {
-        name: 'Mega Man X',
-        id: '1'
-      },
-      {
-        name: 'Pac-Man',
-        id: '1'
-      },
-      {
-        name: 'hello',
-        id: '1'
-      },
-    ];
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
   }
 
   onClickSendButton() {
