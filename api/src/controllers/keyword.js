@@ -13,5 +13,12 @@ export function getKeywordByID(req,res) {
     })
 }
 
+export function deleteKeyword(req,res) {
+    console.log("req & res => ", req.params);
+    keyModel.deleteKeyword(req.params.id).then(([row]) => {
+        res.status(200).json(row);
+    })
+}
+
 
 

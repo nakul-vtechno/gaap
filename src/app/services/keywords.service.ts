@@ -19,7 +19,7 @@ export class KeywordsService {
     this.userKeywords = userKeywords;
   }
 
-  public getUserKeywords(userName){
+  public getUserKeywords(userName) {
     const URL = 'http://localhost:3000/';
     this.http.get<any>(`${URL}keyword/${userName}`).subscribe((res) => {
       console.log('GET Keywords => ', res);
@@ -27,11 +27,10 @@ export class KeywordsService {
     });
   }
 
-  public deleteKeyword(keywordId){
+  public deleteKeyword(keywordId) {
     const URL = 'http://localhost:3000/';
-    this.http.get<any>(`${URL}keyword/${keywordId}`).subscribe((res) => {
-      console.log('GET Keywords => ', res);
-      this.userKeywords = res;
+    this.http.delete<any>(`${URL}keyword/${keywordId}`).subscribe((res) => {
+      console.log('DELETE Keywords => ', res);
     });
   }
 }
