@@ -34,24 +34,21 @@ export class SignupPage implements OnInit {
     });
   }
 
-  public signup(email: any, password: any) {
-    this.authService.signup(email, password)
-    .subscribe((resData) => {
-      console.log('resData', resData);
-      this.router.navigateByUrl('/');
-    },
-    errRes => {
-      const code = errRes.error.error.message;
-      let message = 'Could not sign you up, please try again.';
-      if (code === 'EMAIL_EXISTS') {
-        message = 'This email address exists already!';
-      } else if (code === 'EMAIL_NOT_FOUND') {
-        message = 'E-Mail address could not be found.';
-      } else if (code === 'INVALID_PASSWORD') {
-        message = 'This password is not correct.';
-      }
-      this.showAlert(message);
-    });
+  public signup(email: any, password: any, mobile: any) {
+    this.authService.signup(email, password,mobile)
+      .subscribe((resData) => {
+        console.log('resData', resData);
+        this.router.navigateByUrl('/');
+      },
+        errRes => {
+          console.log("errREs ",errRes);
+          const code = errRes.error.error.message;
+          let message = 'Could not sign you up, please try again.';
+          if (code) {
+            message = code;
+          }
+          this.showAlert(message);
+        });
   }
 
   public onSubmit() {
@@ -61,7 +58,8 @@ export class SignupPage implements OnInit {
     console.log(this.form.value);
     const email = this.form.value.email;
     const password = this.form.value.password;
-    this.signup(email, password);
+    const mobile = this.form.value.mobile;
+    this.signup(email, password,mobile);
   }
 
   private showAlert(alertMessage: string) {

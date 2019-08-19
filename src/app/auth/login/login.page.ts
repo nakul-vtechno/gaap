@@ -31,23 +31,19 @@ export class LoginPage implements OnInit {
 
   public login(email: string, password: string) {
     this.authService.login(email, password)
-    .subscribe((resData) => {
-      console.log('resData', resData);
-      this.router.navigateByUrl('/menu/dashboard');
-    },
-    errRes => {
-      console.log('errRes :::' , errRes);
-      const code = errRes.error.error.message;
-      let message = 'Could not sign you up, please try again.';
-      if (code === 'EMAIL_EXISTS') {
-        message = 'This email address exists already!';
-      } else if (code === 'EMAIL_NOT_FOUND') {
-        message = 'E-Mail address could not be found.';
-      } else if (code === 'INVALID_PASSWORD') {
-        message = 'This password is not correct.';
-      }
-      this.showAlert(message);
-    });
+      .subscribe((resData) => {
+        console.log('resData', resData);
+        this.router.navigateByUrl('/menu/dashboard');
+      },
+        errRes => {
+          console.log('errRes :::', errRes);
+          const code = errRes.error.error.message;
+          let message = 'Could not sign you up, please try again.';
+          if (code) {
+            message = code;
+          }
+          this.showAlert(message);
+        });
   }
 
   public onSubmit() {
