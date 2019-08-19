@@ -23,6 +23,7 @@ export interface AuthResponseData {
 export class AuthService implements OnDestroy {
   private _user = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
+  private path = environment.api;
 
   constructor(private http: HttpClient) { }
 
@@ -99,33 +100,23 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  signup(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
-        environment.firebaseAPIKey
-        }`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(tap(this.setUserData.bind(this)));
+  signup(email: string, password: string, mobile: string) {
+    const option = {
+      email : email,
+      password : password,
+      name : 'bir_nakul',
+      mobile : mobile
+    }
+    return this.http.put(`${this.path}/user/singup`,option).pipe(tap(this.setUserData.bind(this)));
   }
 
+
   login(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
-        environment.firebaseAPIKey
-        }`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
+    const option = {
+      email: email,
+      password: password
+    }
+    return this.http.post(`${this.path}/user/login`,option)
       .pipe(tap(this.setUserData.bind(this)));
   }
 
@@ -148,7 +139,7 @@ export class AuthService implements OnDestroy {
 
   private setUserData(userData: AuthResponseData) {
     const expirationTime = new Date(
-      new Date().getTime() + +userData.expiresIn * 1000
+      new Date().getTime() + +userData.expiresIn
     );
     const user = new User(
       userData.localId,
@@ -178,6 +169,7 @@ export class AuthService implements OnDestroy {
       tokenExpirationDate: tokenExpirationDate,
       email: email
     });
+    console.log("authData : ",data);
     Plugins.Storage.set({ key: 'authData', value: data });
   }
 
