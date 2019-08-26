@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { Plugins } from '@capacitor/core';
-import { map } from 'rxjs/operators';
+
+const { Storage } = Plugins;
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -10,33 +11,22 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('AuthInterceptor : ');
 
-    from(Plugins.Storage.get({ key: 'authData' }))
-      .pipe(
-        map(storedData => {
-          console.log('interceptor : ',storedData)
-          if (!storedData || !storedData.value) {
-            return null;
+    Storage.get({ key: 'authData' })
+    .then((res) => {
+      const parsedData = JSON.parse(res.value);
+      if (parsedData) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${parsedData.token}`
           }
-          const parsedData = JSON.parse(storedData.value) as {
-            token: string;
-            tokenExpirationDate: string;
-            userId: string;
-            email: string;
-          };
-
-
-          request = request.clone({
-            setHeaders: {
-              Authorization: `Bearer ${parsedData.token}`
-            }
-          });
-
-        }),
-      );
-
+        });
+      }
+    }).catch((err) => {
+      console.log("autth Error ",err);
+    });
 
     return next.handle(request);
   }
+
 }

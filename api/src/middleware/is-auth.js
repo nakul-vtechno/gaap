@@ -20,7 +20,7 @@ export default function (req, res, next) {
         err.statusCode = 500;
         err.msg = "Server Error";
         // throw err;
-        return res.status(500).json({ error: error });
+        return res.status(500).json({ error: err });
     }
     if (!decodedToken) {
         const error = new Error('Not authenticated.');

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser'
 import logger from 'morgan';
 import cors from 'cors';
+import sequelize from './db/sequelize';
 
 import * as errorControler from './controllers/error';
 import indexRouter from './routes/index';
@@ -27,6 +28,10 @@ app.use('/keyword',keywordRouter);
 app.use('/auth',authRouter);
 
 app.use(errorControler.get404);
+
+sequelize.sync().then((user) => {
+    console.log('create',user);
+})
 
 
 export default app;

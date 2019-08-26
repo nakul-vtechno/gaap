@@ -4,7 +4,7 @@ import * as userControler from "../controllers/user";
 const router = express.Router();
 
 router.get('/',userControler.getUser);
-router.get('/:id', userControler.getUsers);
+// router.get('/:id', userControler.getUsers);
 
 // User Singup...
 router.put('/singup', [

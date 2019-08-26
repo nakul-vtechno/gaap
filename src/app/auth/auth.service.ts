@@ -84,7 +84,7 @@ export class AuthService implements OnDestroy {
   }
 
   autoLogin() {
-    this.Keywords.getUserKeywords(this.UserDetails.getUserData().email);
+    // this.Keywords.getUserKeywords(this.UserDetails.getUserData().email);
     return from(Plugins.Storage.get({ key: 'authData' }))
       .pipe(
         map(storedData => {
